@@ -1,0 +1,7 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0 60px;
+  color: #212121;
+  opacity: 70%;
+}
