@@ -3,7 +3,7 @@
   width: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .card__content {
@@ -21,6 +21,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  max-width: 350px;
 }
 
 .card__like-btn {
@@ -32,7 +33,7 @@
   border: none;
   background-color: transparent;
   opacity: 40%;
-  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
 .card__like-btn:hover {
@@ -42,11 +43,13 @@
 @media screen and (max-width: 627px) {
   .card__image {
     height: 288px;
+    width: 100%;
   }
 
   .card__title {
     font-size: 1rem;
     font-weight: 500;
+    max-width: 250px;
   }
 
   .card__like-btn {

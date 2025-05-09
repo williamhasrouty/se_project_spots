@@ -33,6 +33,8 @@
 
 **GitHub Link**
 
-https://github.com/williamhasrouty/se_project_spots.git
+https://williamhasrouty.github.io/se_project_spots/
 
 **Recorded Video**
+
+https://drive.google.com/file/d/1tVsYDq2ecNBEc73SUD5jhBI8xTag8k9m/view?usp=drive_link
