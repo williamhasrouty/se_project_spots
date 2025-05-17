@@ -10,10 +10,14 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
+  opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
 .modal_is-opened {
   visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
 }
 
 .modal__container {
@@ -67,7 +71,6 @@
   padding: 16px 12px;
   border-radius: 8px;
   border-color: #212121;
-  opacity: 40%;
   border: solid;
   font-size: 1.25rem;
   font-weight: 500;
