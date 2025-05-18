@@ -37,10 +37,17 @@
   height: 40px;
   position: absolute;
   background-image: url(../images/close-icon.svg);
+  opacity: 40%;
   border: none;
   background-color: transparent;
   padding: 0;
   color: #212121;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.modal__close-btn:hover {
+  opacity: 100%;
 }
 
 .modal__title {
@@ -70,6 +77,7 @@
   width: 100%;
   padding: 16px 12px;
   border-radius: 8px;
+  color: #212121;
   border-color: #212121;
   border: solid;
   font-size: 1.25rem;
@@ -79,7 +87,6 @@
 }
 
 .modal__input::placeholder {
-  color: #212121;
   opacity: 30%;
 }
 
@@ -94,6 +101,7 @@
   font-size: 1rem;
   font-weight: 500;
   line-height: 1;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 627px) {
