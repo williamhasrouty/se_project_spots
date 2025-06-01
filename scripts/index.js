@@ -32,7 +32,6 @@ const initialCards = [
 
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
-const editProfileCloseBtn = editProfileModal.querySelector(".modal__close-btn");
 const editProfileForm = editProfileModal.querySelector(".modal__form");
 const editProfileNameInput =
   editProfileModal.querySelector("#modal-name-input");
@@ -44,7 +43,6 @@ const profileDescriptionEl = document.querySelector(".profile__description");
 
 const newPostBtn = document.querySelector(".profile__add-btn");
 const newPostModal = document.querySelector("#new-post-modal");
-const newPostCloseBtn = newPostModal.querySelector(".modal__close-btn");
 
 const newPostForm = newPostModal.querySelector(".modal__form");
 const newPostImgLinkInput = newPostModal.querySelector("#card-image-input");
@@ -54,7 +52,6 @@ const cardImageEl = document.querySelector(".card__image");
 const cardCaptionEl = document.querySelector(".card__caption");
 
 const previewModal = document.querySelector("#preview-modal");
-const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn");
 const previewImgEl = previewModal.querySelector(".modal__image");
 const previewCaptionEl = previewModal.querySelector(".modal__caption");
 const previewCloseBtn = previewModal.querySelector(
@@ -67,8 +64,15 @@ const cardTemplate = document
 
 const cardsList = document.querySelector(".cards__list");
 
+const closeBtn = document.querySelectorAll(".modal__close-btn");
+
+closeBtn.forEach((button) => {
+  const modal = button.closest(".modal");
+  button.addEventListener("click", () => closeModal(modal));
+});
+
 function getCardElement(data) {
-  const cardElement = cardTemplate.cloneNode(true);
+  let cardElement = cardTemplate.cloneNode(true);
   const cardCaptionEl = cardElement.querySelector(".card__caption");
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
@@ -94,10 +98,6 @@ function getCardElement(data) {
     openModal(previewModal);
   });
 
-  previewCloseBtn.addEventListener("click", function () {
-    closeModal(previewModal);
-  });
-
   return cardElement;
 }
 
@@ -115,16 +115,8 @@ editProfileBtn.addEventListener("click", function () {
   openModal(editProfileModal);
 });
 
-editProfileCloseBtn.addEventListener("click", function () {
-  closeModal(editProfileModal);
-});
-
 newPostBtn.addEventListener("click", function () {
   openModal(newPostModal);
-});
-
-newPostCloseBtn.addEventListener("click", function () {
-  closeModal(newPostModal);
 });
 
 function handleEditProfileSubmit(evt) {
@@ -144,14 +136,22 @@ function handleNewPostSubmit(evt) {
     link: newPostImgLinkInput.value,
   };
 
-  const cardElement = getCardElement(inputValues);
-  cardsList.prepend(cardElement);
+  renderCard(inputValues, "prepend");
   closeModal(newPostModal);
+  evt.target.reset();
+}
+
+function renderCard(item, method = "prepend") {
+  const cardElement = getCardElement(item);
+
+  if (typeof cardsList[method] === "function") {
+    cardsList[method](cardElement);
+  } else {
+    console.warn(`Invalid method "${method}", defaulting to prepend.`);
+    cardsList.prepend(cardElement);
+  }
 }
 
 newPostForm.addEventListener("submit", handleNewPostSubmit);
 
-initialCards.forEach(function (item) {
-  const cardElement = getCardElement(item);
-  cardsList.append(cardElement);
-});
+initialCards.forEach((item) => renderCard(item, "append"));

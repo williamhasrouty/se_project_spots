@@ -67,6 +67,7 @@
 
 .profile__edit-btn:hover {
   opacity: 100%;
+  cursor: url("../images/hover-cursor.svg") 16 16, auto;
 }
 
 .profile__add-btn {
@@ -92,6 +93,7 @@
 
 .profile__add-btn:hover {
   opacity: 80%;
+  cursor: url("../images/hover-cursor.svg") 16 16, auto;
 }
 
 @media screen and (max-width: 627px) {

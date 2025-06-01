@@ -86,10 +86,12 @@
 
 .modal__close-btn:hover {
   opacity: 1;
+  cursor: url("../images/hover-cursor.svg") 12 12, auto;
 }
 
 .modal__close_type_preview:hover {
   opacity: 40%;
+  cursor: url("../images/hover-cursor.svg") 12 12, auto;
 }
 
 .modal__title {
@@ -128,6 +130,10 @@
   box-sizing: border-box;
 }
 
+.modal__input:hover {
+  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+}
+
 .modal__input::placeholder {
   opacity: 30%;
 }
@@ -143,7 +149,10 @@
   font-size: 1rem;
   font-weight: 500;
   line-height: 1;
-  cursor: pointer;
+}
+
+.modal__submit-btn:hover {
+  cursor: url("../images/hover-cursor.svg") 12 12, auto;
 }
 
 @media screen and (max-width: 480px) {
