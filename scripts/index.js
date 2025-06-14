@@ -1,3 +1,4 @@
+// Initial cards
 const initialCards = [
   {
     name: "Golden Gate bridge",
@@ -30,6 +31,7 @@ const initialCards = [
   },
 ];
 
+// Edit form elements
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
 const editProfileForm = editProfileModal.querySelector(".modal__form");
@@ -41,6 +43,7 @@ const editProfileDescriptionInput = editProfileModal.querySelector(
 const profileNameEl = document.querySelector(".profile__name");
 const profileDescriptionEl = document.querySelector(".profile__description");
 
+// New post elements
 const newPostBtn = document.querySelector(".profile__add-btn");
 const newPostModal = document.querySelector("#new-post-modal");
 
@@ -48,9 +51,16 @@ const newPostForm = newPostModal.querySelector(".modal__form");
 const newPostImgLinkInput = newPostModal.querySelector("#card-image-input");
 const newPostCaptionInput = newPostModal.querySelector("#card-caption-input");
 
+// Card related elements
 const cardImageEl = document.querySelector(".card__image");
 const cardCaptionEl = document.querySelector(".card__caption");
+const cardSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
+const cardTemplate = document
+  .querySelector("#card-template")
+  .content.querySelector(".card");
+const cardsList = document.querySelector(".cards__list");
 
+// Preview modal elements
 const previewModal = document.querySelector("#preview-modal");
 const previewImgEl = previewModal.querySelector(".modal__image");
 const previewCaptionEl = previewModal.querySelector(".modal__caption");
@@ -58,100 +68,116 @@ const previewCloseBtn = previewModal.querySelector(
   ".modal__close_type_preview"
 );
 
-const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".card");
-
-const cardsList = document.querySelector(".cards__list");
-
-const closeBtn = document.querySelectorAll(".modal__close-btn");
-
-closeBtn.forEach((button) => {
-  const modal = button.closest(".modal");
-  button.addEventListener("click", () => closeModal(modal));
+document.querySelectorAll(".modal__close-btn").forEach((btn) => {
+  const modal = btn.closest(".modal");
+  btn.addEventListener("click", () => closeModal(modal));
 });
 
+// Modal functions
+function openModal(modal) {
+  modal.classList.add("modal_is-opened");
+  document.addEventListener("keydown", handleEscClose);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_is-opened");
+  document.removeEventListener("keydown", handleEscClose);
+}
+
+function handleEscClose(event) {
+  if (event.key === "Escape") {
+    const openedModal = document.querySelector(".modal.modal_is-opened");
+    if (openedModal) {
+      closeModal(openedModal);
+    }
+  }
+}
+
+document.querySelectorAll(".modal").forEach((modal) => {
+  modal.addEventListener("mousedown", (event) => {
+    if (event.target.classList.contains("modal")) {
+      closeModal(modal);
+    }
+  });
+});
+
+// Card functions
 function getCardElement(data) {
-  let cardElement = cardTemplate.cloneNode(true);
-  const cardCaptionEl = cardElement.querySelector(".card__caption");
-  const cardImageEl = cardElement.querySelector(".card__image");
-  const cardLikeBtn = cardElement.querySelector(".card__like-btn");
+  const card = cardTemplate.cloneNode(true);
+  const image = card.querySelector(".card__image");
+  const caption = card.querySelector(".card__caption");
+  const likeBtn = card.querySelector(".card__like-btn");
+  const deleteBtn = card.querySelector(".card__delete-btn");
 
-  cardLikeBtn.addEventListener("click", () => {
-    cardLikeBtn.classList.toggle("card__like-btn_active");
-  });
-  cardImageEl.src = data.link;
-  cardImageEl.alt = data.name;
-  cardCaptionEl.textContent = data.name;
+  image.src = data.link;
+  image.alt = data.name;
+  caption.textContent = data.name;
 
-  const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
-
-  cardDeleteBtn.addEventListener("click", () => {
-    cardElement.remove();
-    cardElement = null;
-  });
-
-  cardImageEl.addEventListener("click", () => {
+  likeBtn.addEventListener("click", () =>
+    likeBtn.classList.toggle("card__like-btn_active")
+  );
+  deleteBtn.addEventListener("click", () => card.remove());
+  image.addEventListener("click", () => {
     previewImgEl.src = data.link;
     previewImgEl.alt = data.name;
     previewCaptionEl.textContent = data.name;
     openModal(previewModal);
   });
 
-  return cardElement;
+  return card;
 }
 
-function openModal(modal) {
-  modal.classList.add("modal_is-opened");
+function renderCard(data, method = "prepend") {
+  const card = getCardElement(data);
+  if (typeof cardsList[method] === "function") {
+    cardsList[method](card);
+  } else {
+    console.warn(`Invalid method "${method}". Falling back to prepend.`);
+    cardsList.prepend(card);
+  }
 }
 
-function closeModal(modal) {
-  modal.classList.remove("modal_is-opened");
-}
-
-editProfileBtn.addEventListener("click", function () {
+// Edit profile function
+editProfileBtn.addEventListener("click", () => {
   editProfileNameInput.value = profileNameEl.textContent;
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
+  resetValidation(
+    editProfileForm,
+    [editProfileNameInput, editProfileDescriptionInput],
+    settings
+  );
   openModal(editProfileModal);
 });
 
-newPostBtn.addEventListener("click", function () {
-  openModal(newPostModal);
-});
-
-function handleEditProfileSubmit(evt) {
+editProfileForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   profileNameEl.textContent = editProfileNameInput.value;
   profileDescriptionEl.textContent = editProfileDescriptionInput.value;
   closeModal(editProfileModal);
-}
+});
 
-editProfileForm.addEventListener("submit", handleEditProfileSubmit);
+// New post function
+newPostBtn.addEventListener("click", () => {
+  resetValidation(
+    newPostForm,
+    [newPostCaptionInput, newPostImgLinkInput],
+    settings
+  );
+  openModal(newPostModal);
+});
 
-function handleNewPostSubmit(evt) {
+newPostForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-
   const inputValues = {
     name: newPostCaptionInput.value,
     link: newPostImgLinkInput.value,
   };
-
   renderCard(inputValues, "prepend");
   closeModal(newPostModal);
   evt.target.reset();
-}
+  disableButton(cardSubmitBtn, settings);
+});
 
-function renderCard(item, method = "prepend") {
-  const cardElement = getCardElement(item);
-
-  if (typeof cardsList[method] === "function") {
-    cardsList[method](cardElement);
-  } else {
-    console.warn(`Invalid method "${method}", defaulting to prepend.`);
-    cardsList.prepend(cardElement);
-  }
-}
-
-newPostForm.addEventListener("submit", handleNewPostSubmit);
-
+// Init
+enableValidation(settings);
 initialCards.forEach((item) => renderCard(item, "append"));

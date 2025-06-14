@@ -108,7 +108,8 @@
 }
 
 .modal__label {
-  margin: 0 0 32px;
+  display: block;
+  margin-bottom: 32px;
   font-size: 1rem;
   font-weight: 500;
   color: #212121;
@@ -116,14 +117,12 @@
 }
 
 .modal__input {
-  display: block;
   margin: 8px 0 0;
   width: 100%;
   padding: 16px 12px;
   border-radius: 8px;
   color: #212121;
-  border-color: #212121;
-  border: solid;
+  border: 1px solid rgba(33, 33, 33, 0.4);
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1;
@@ -132,10 +131,29 @@
 
 .modal__input:hover {
   cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  transition: 0.2s;
+  border-color: #212121;
+  opacity: 1;
 }
 
 .modal__input::placeholder {
-  opacity: 30%;
+  opacity: 0.3;
+}
+
+.modal__error {
+  display: block;
+  color: rgba(255, 0, 0, 0.7);
+  margin-top: 8px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.modal__error:empty {
+  display: none;
+}
+
+.modal__input_type_error {
+  border: 1px solid rgba(255, 0, 0, 0.6);
 }
 
 .modal__submit-btn {
@@ -149,10 +167,16 @@
   font-size: 1rem;
   font-weight: 500;
   line-height: 1;
+  transition: opacity 0.3s;
 }
 
 .modal__submit-btn:hover {
   cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  opacity: 0.8;
+}
+
+.modal__submit-btn:disabled {
+  opacity: 50%;
 }
 
 @media screen and (max-width: 480px) {

@@ -74,7 +74,7 @@
 
 .card__delete-btn:hover {
   background-image: url(../images/delete-hover.svg);
-  transition-duration: 0.1s;
+  transition-duration: 0.2s;
   cursor: url("../images/hover-cursor.svg") 12 12, auto;
 }
 
