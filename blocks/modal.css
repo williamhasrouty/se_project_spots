@@ -76,7 +76,12 @@
   cursor: pointer;
 }
 
-.modal__close_type_preview {
+.modal__close-btn:hover {
+  opacity: 1;
+  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+}
+
+.modal__close-btn_type_preview {
   top: 0;
   right: -52.5px;
   background-image: url(../images/close-icon-white.svg);
@@ -84,14 +89,10 @@
   transition: top 0.2s ease, right 0.2s ease;
 }
 
-.modal__close-btn:hover {
-  opacity: 1;
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
-}
-
-.modal__close_type_preview:hover {
+.modal__close-btn_type_preview:hover {
   opacity: 40%;
   cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  transition: 0.2s;
 }
 
 .modal__title {
@@ -173,6 +174,12 @@
 .modal__submit-btn:hover {
   cursor: url("../images/hover-cursor.svg") 12 12, auto;
   opacity: 0.8;
+}
+
+.modal__submit-btn_disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
 }
 
 .modal__submit-btn:disabled {
