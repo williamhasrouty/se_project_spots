@@ -144,11 +144,11 @@ editProfileBtn.addEventListener("click", () => {
   const buttonElement = editProfileForm.querySelector(
     settings.submitButtonSelector
   );
-  resetValidation(
+  /*resetValidation(
     editProfileForm,
     [editProfileNameInput, editProfileDescriptionInput],
     settings
-  );
+  );*/
   toggleButtonState(inputList, buttonElement, settings);
   openModal(editProfileModal);
 });
@@ -179,9 +179,8 @@ newPostForm.addEventListener("submit", (evt) => {
   renderCard(inputValues, "prepend");
   closeModal(newPostModal);
   evt.target.reset();
-  disableButton(cardSubmitBtn, settings);
+  disableButton(newPostSubmitBtn, settings);
 });
 
 // Init
-enableValidation(settings);
 initialCards.forEach((item) => renderCard(item, "append"));
