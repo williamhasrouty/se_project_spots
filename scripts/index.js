@@ -144,11 +144,11 @@ editProfileBtn.addEventListener("click", () => {
   const buttonElement = editProfileForm.querySelector(
     settings.submitButtonSelector
   );
-  /*resetValidation(
+  resetValidation(
     editProfileForm,
     [editProfileNameInput, editProfileDescriptionInput],
     settings
-  );*/
+  );
   toggleButtonState(inputList, buttonElement, settings);
   openModal(editProfileModal);
 });
@@ -162,11 +162,6 @@ editProfileForm.addEventListener("submit", (evt) => {
 
 // New post function
 newPostBtn.addEventListener("click", () => {
-  resetValidation(
-    newPostForm,
-    [newPostCaptionInput, newPostImgLinkInput],
-    settings
-  );
   openModal(newPostModal);
 });
 
