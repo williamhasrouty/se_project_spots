@@ -195,9 +195,8 @@ function handleDeleteCard(card, cardId) {
   openModal(deleteModal);
 }
 
-//TODO - finish avatar submission handler
 function handleAvatarSubmit(evt) {
-  evt.preventDefault(); // Prevent default form behavior
+  evt.preventDefault();
   const avatarUrl = avatarInput.value;
   const submitBtn = evt.submitter;
   setButtonText(submitBtn, true, "Save", "Saving...");
@@ -224,7 +223,6 @@ document.querySelectorAll(".modal").forEach((modal) => {
 
 // Card functions
 function getCardElement(data) {
-
   const card = cardTemplate.cloneNode(true);
   const image = card.querySelector(".card__image");
   const caption = card.querySelector(".card__caption");
@@ -288,14 +286,13 @@ editProfileForm.addEventListener("submit", (evt) => {
       about: editProfileDescriptionInput.value,
     })
     .then((data) => {
-      // Use data argument instead of the input values
       profileNameEl.textContent = data.name;
       profileDescriptionEl.textContent = data.about;
+      closeModal(editProfileModal);
     })
     .catch(console.error)
     .finally(() => {
       setButtonText(submitBtn, false, "Save", "Saving...");
-      closeModal(editProfileModal);
     });
 });
 
@@ -308,9 +305,6 @@ newPostBtn.addEventListener("click", () => {
 
 newPostForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  // const inputValues = {
-  //   name: newPostCaptionInput.value,
-  //   link: newPostImgLinkInput.value,
   const submitBtn = evt.submitter;
   setButtonText(submitBtn, true, "Save", "Saving...");
   api
@@ -319,14 +313,14 @@ newPostForm.addEventListener("submit", (evt) => {
       link: newPostImgLinkInput.value,
     })
     .then((cardData) => {
-      renderCard(cardData, "prepend"); // This will include the correct _id
+      renderCard(cardData, "prepend");
       closeModal(newPostModal);
       newPostForm.reset();
       disableButton(newPostSubmitBtn, validationConfig);
     })
     .catch(console.error)
     .finally(() => {
-      setButtonText(submitBtn, true, "Save", "Saving...");
+      setButtonText(submitBtn, false, "Save", "Saving...");
     });
 });
 
