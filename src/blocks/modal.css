@@ -11,7 +11,9 @@
   align-items: center;
   padding: 0 10px;
   opacity: 0;
-  transition: visibility 0s linear 0.2s, opacity 0.2s linear;
+  transition:
+    visibility 0s linear 0.2s,
+    opacity 0.2s linear;
 }
 
 .modal_type_preview {
@@ -78,7 +80,9 @@
 
 .modal__close-btn:hover {
   opacity: 1;
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
 }
 
 .modal__close-btn_type_preview {
@@ -86,12 +90,16 @@
   right: -52.5px;
   background-image: url(../images/close-icon-white.svg);
   opacity: 1;
-  transition: top 0.2s ease, right 0.2s ease;
+  transition:
+    top 0.2s ease,
+    right 0.2s ease;
 }
 
 .modal__close-btn_type_preview:hover {
   opacity: 40%;
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
   transition: 0.2s;
 }
 
@@ -131,7 +139,9 @@
 }
 
 .modal__input:hover {
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
   transition: 0.2s;
   border-color: #212121;
   opacity: 1;
@@ -176,7 +186,9 @@
 }
 
 .modal__submit-btn:hover {
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
   opacity: 0.8;
 }
 
@@ -254,7 +266,9 @@
 }
 
 .modal__cancel-btn:hover {
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
   color: #fff;
   background-color: #212121;
 }

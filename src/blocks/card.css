@@ -11,7 +11,9 @@
 }
 
 .card__image:hover {
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
 }
 
 .card__content {
@@ -45,7 +47,9 @@
 }
 
 .card__like-btn:hover {
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
 }
 
 .card__like-btn_active {
@@ -75,7 +79,9 @@
 .card__delete-btn:hover {
   background-image: url(../images/delete-hover.svg);
   transition-duration: 0.2s;
-  cursor: url("../images/hover-cursor.svg") 12 12, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
 }
 
 @media screen and (max-width: 627px) {

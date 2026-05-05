@@ -31,7 +31,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   color: transparent;
   border-radius: 8px;
-  cursor: url("../images/hover-cursor.svg") 16 16, auto;
+  cursor: url("../images/hover-cursor.svg") 4 4, auto;
 }
 
 .profile__avatar-container:hover .profile__avatar-btn {
@@ -104,7 +104,7 @@
 
 .profile__edit-btn:hover {
   opacity: 100%;
-  cursor: url("../images/hover-cursor.svg") 16 16, auto;
+  cursor: url("../images/hover-cursor.svg") 4 4, auto;
 }
 
 .profile__add-btn {
@@ -130,7 +130,7 @@
 
 .profile__add-btn:hover {
   opacity: 80%;
-  cursor: url("../images/hover-cursor.svg") 16 16, auto;
+  cursor: url("../images/hover-cursor.svg") 4 4, auto;
 }
 
 @media screen and (max-width: 627px) {
@@ -154,8 +154,6 @@
   .profile__avatar-btn::after {
     content: "";
   }
-
-  /* TODO - finish mobile avatar button styles */
 
   .profile__avatar {
     margin: 0 0 12px;
