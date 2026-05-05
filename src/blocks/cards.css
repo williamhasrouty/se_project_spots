@@ -9,8 +9,18 @@
   margin: 0;
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, 413px);
+  grid-template-columns: repeat(4, 282px);
   gap: 40px 20px;
+}
+
+.cards__loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #212121;
+  opacity: 0.6;
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
 @media screen and (max-width: 627px) {

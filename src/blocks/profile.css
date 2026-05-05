@@ -12,9 +12,34 @@
   border-radius: 8px;
 }
 
+.profile__avatar_loading {
+  opacity: 0.1;
+}
+
 .profile__avatar-container {
   position: relative;
   margin-right: 20px;
+}
+
+.profile__avatar-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 190px;
+  height: 190px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.profile__avatar-container:has(.profile__avatar_loading)::before {
+  opacity: 1;
 }
 
 .profile__avatar-btn {
@@ -31,7 +56,9 @@
   background-color: rgba(0, 0, 0, 0.5);
   color: transparent;
   border-radius: 8px;
-  cursor: url("../images/hover-cursor.svg") 4 4, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 4 4,
+    auto;
 }
 
 .profile__avatar-container:hover .profile__avatar-btn {
@@ -104,7 +131,9 @@
 
 .profile__edit-btn:hover {
   opacity: 100%;
-  cursor: url("../images/hover-cursor.svg") 4 4, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 4 4,
+    auto;
 }
 
 .profile__add-btn {
@@ -130,7 +159,9 @@
 
 .profile__add-btn:hover {
   opacity: 80%;
-  cursor: url("../images/hover-cursor.svg") 4 4, auto;
+  cursor:
+    url("../images/hover-cursor.svg") 4 4,
+    auto;
 }
 
 @media screen and (max-width: 627px) {
@@ -166,6 +197,11 @@
     margin-right: 0px;
   }
 
+  .profile__avatar-container::before {
+    width: 80px;
+    height: 80px;
+  }
+
   .profile__name {
     font-size: 1.25rem;
     margin: 0 0 6px;
@@ -193,4 +229,30 @@
     justify-content: center;
     max-width: 288px;
   }
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.profile__name_loading,
+.profile__description_loading {
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    rgba(240, 240, 240, 1) 25%,
+    rgba(200, 200, 200, 1) 50%,
+    rgba(240, 240, 240, 1) 75%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 4px;
+  display: inline-block;
+  min-width: 150px;
 }

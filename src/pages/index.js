@@ -60,6 +60,13 @@ api
   .getAppInfo()
   .then(([cards, userData]) => {
     currentUserId = userData._id;
+
+    // Remove loading message from cards
+    const loadingMessage = document.querySelector(".cards__loading");
+    if (loadingMessage) {
+      loadingMessage.remove();
+    }
+
     cards.forEach((item) => renderCard(item, "append"));
 
     // Handle users info
@@ -68,6 +75,11 @@ api
     avatarElement.src = userData.avatar;
     profileNameEl.textContent = userData.name;
     profileDescriptionEl.textContent = userData.about;
+
+    // Remove loading states
+    avatarElement.classList.remove("profile__avatar_loading");
+    profileNameEl.classList.remove("profile__name_loading");
+    profileDescriptionEl.classList.remove("profile__description_loading");
   })
 
   .catch(console.error);
@@ -88,7 +100,6 @@ const avatarModalBtn = document.querySelector(".profile__avatar-btn");
 const avatarModal = document.querySelector("#avatar-modal");
 const avatarInput = avatarModal.querySelector("#profile-avatar-input");
 const avatarForm = avatarModal.querySelector(".modal__form");
-const avatarFileInput = avatarModal.querySelector("#avatar-file-input");
 
 //Profile name and description elements
 
@@ -103,7 +114,6 @@ const newPostForm = newPostModal.querySelector(".modal__form");
 const newPostImgLinkInput = newPostModal.querySelector("#card-image-input");
 const newPostCaptionInput = newPostModal.querySelector("#card-caption-input");
 const newPostSubmitBtn = newPostModal.querySelector(".modal__submit-btn");
-const newPostFileInput = newPostModal.querySelector("#card-image-file");
 
 // Card related elements
 const cardTemplate = document
@@ -149,61 +159,6 @@ function handleEscClose(event) {
       closeModal(openedModal);
     }
   }
-}
-
-// File upload functions
-function readFileAsDataURL(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (event) => resolve(event.target.result);
-    reader.onerror = (error) => reject(error);
-    reader.readAsDataURL(file);
-  });
-}
-
-function handleFileUpload(fileInput, urlInput, submitBtn) {
-  fileInput.addEventListener("change", (evt) => {
-    const file = evt.target.files[0];
-    if (file) {
-      readFileAsDataURL(file)
-        .then((dataURL) => {
-          // Store the data URL in the URL input as a temporary value
-          urlInput.value = dataURL;
-          // Update button text to show file is selected
-          const fileLabel =
-            fileInput.parentElement.querySelector(".modal__file-btn");
-          if (fileLabel) {
-            fileLabel.textContent = `✓ ${file.name}`;
-          }
-          // Enable submit button if caption is filled (for new post)
-          const captionInput = fileInput
-            .closest("form")
-            .querySelector("#card-caption-input");
-          if (captionInput) {
-            if (captionInput.value.trim()) {
-              submitBtn.disabled = false;
-            }
-          } else {
-            submitBtn.disabled = false;
-          }
-        })
-        .catch((error) => {
-          console.error("Error reading file:", error);
-        });
-    }
-  });
-
-  // When URL input changes, clear file input and reset button text
-  urlInput.addEventListener("input", () => {
-    if (urlInput.value && !urlInput.value.startsWith("data:")) {
-      fileInput.value = "";
-      const fileLabel =
-        fileInput.parentElement.querySelector(".modal__file-btn");
-      if (fileLabel) {
-        fileLabel.textContent = "Upload from computer";
-      }
-    }
-  });
 }
 
 function handleImagePreview(data) {
@@ -263,12 +218,6 @@ function handleAvatarSubmit(evt) {
       avatarElement.src = data.avatar;
       closeModal(avatarModal);
       avatarForm.reset();
-      // Reset file button text
-      const fileLabel =
-        avatarFileInput.parentElement.querySelector(".modal__file-btn");
-      if (fileLabel) {
-        fileLabel.textContent = "Upload from computer";
-      }
     })
     .catch(console.error)
     .finally(() => {
@@ -292,8 +241,7 @@ function getCardElement(data) {
   const likeBtn = card.querySelector(".card__like-btn");
   const deleteBtn = card.querySelector(".card__delete-btn");
 
-  // TODO - if card is liked, set active class on card.
-
+  // If card is liked, set active class
   const isLiked = data.isLiked;
   if (isLiked) {
     likeBtn.classList.add("card__like-btn_active");
@@ -303,8 +251,19 @@ function getCardElement(data) {
   image.alt = data.name;
   caption.textContent = data.name;
 
-  likeBtn.addEventListener("click", (evt) => handleLike(evt, data._id));
-  deleteBtn.addEventListener("click", () => handleDeleteCard(card, data._id));
+  // Only add API-dependent functionality if card has an ID
+  if (data._id) {
+    likeBtn.addEventListener("click", (evt) => handleLike(evt, data._id));
+    deleteBtn.addEventListener("click", () => handleDeleteCard(card, data._id));
+  } else {
+    // For cards without IDs (initial cards), add simple toggle
+    likeBtn.addEventListener("click", () => {
+      likeBtn.classList.toggle("card__like-btn_active");
+    });
+    // Hide delete button for initial cards
+    deleteBtn.style.display = "none";
+  }
+
   image.addEventListener("click", () => handleImagePreview(data));
 
   return card;
@@ -370,6 +329,7 @@ newPostForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const submitBtn = evt.submitter;
   setButtonText(submitBtn, true, "Save", "Saving...");
+
   api
     .addCard({
       name: newPostCaptionInput.value,
@@ -380,12 +340,6 @@ newPostForm.addEventListener("submit", (evt) => {
       closeModal(newPostModal);
       newPostForm.reset();
       disableButton(newPostSubmitBtn, validationConfig);
-      // Reset file button text
-      const fileLabel =
-        newPostFileInput.parentElement.querySelector(".modal__file-btn");
-      if (fileLabel) {
-        fileLabel.textContent = "Upload from computer";
-      }
     })
     .catch(console.error)
     .finally(() => {
@@ -406,11 +360,3 @@ deleteForm.addEventListener("submit", handleDeleteSubmit);
 deleteCancelBtn.addEventListener("click", () => {
   closeModal(deleteModal);
 });
-
-// Initialize file upload handlers
-handleFileUpload(
-  avatarFileInput,
-  avatarInput,
-  avatarForm.querySelector(".modal__submit-btn"),
-);
-handleFileUpload(newPostFileInput, newPostImgLinkInput, newPostSubmitBtn);

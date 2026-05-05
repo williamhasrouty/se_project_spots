@@ -34,12 +34,14 @@
             <img
               src="<%=require('./images/avatar.jpg')%>"
               alt="Avatar of Bessie Coleman"
-              class="profile__avatar"
+              class="profile__avatar profile__avatar_loading"
             />
           </div>
           <div class="profile__column">
-            <h1 class="profile__name">Bessie Coleman</h1>
-            <p class="profile__description">Civil Aviator</p>
+            <h1 class="profile__name profile__name_loading">Bessie Coleman</h1>
+            <p class="profile__description profile__description_loading">
+              Civil Aviator
+            </p>
 
             <button type="button" class="profile__edit-btn">
               <img
@@ -57,6 +59,7 @@
         </section>
         <section class="cards page__section">
           <ul class="cards__list">
+            <p class="cards__loading">Loading posts...</p>
             <template id="card-template"
               ><li class="card">
                 <button class="card__delete-btn" type="button"></button>
@@ -71,7 +74,7 @@
         </section>
       </main>
       <footer class="footer">
-        <p class="footer__copyright">2025 &copy; Spots</p>
+        <p class="footer__copyright">2026 &copy; Spots</p>
       </footer>
       <div class="modal" id="edit-profile-modal">
         <div class="modal__container">
@@ -129,18 +132,6 @@
               />
               <span id="card-image-input-error" class="modal__error"></span>
             </label>
-            <div class="modal__or-divider">
-              <span class="modal__or-text">or</span>
-            </div>
-            <label for="card-image-file" class="modal__file-label">
-              <input
-                id="card-image-file"
-                type="file"
-                class="modal__file-input"
-                accept="image/*"
-              />
-              <span class="modal__file-btn">Upload from computer</span>
-            </label>
             <label for="card-caption-input" class="modal__label"
               >Caption
               <input
@@ -187,18 +178,6 @@
                 required
               />
               <span id="profile-avatar-input-error" class="modal__error"></span>
-            </label>
-            <div class="modal__or-divider">
-              <span class="modal__or-text">or</span>
-            </div>
-            <label for="avatar-file-input" class="modal__file-label">
-              <input
-                id="avatar-file-input"
-                type="file"
-                class="modal__file-input"
-                accept="image/*"
-              />
-              <span class="modal__file-btn">Upload from computer</span>
             </label>
             <button type="submit" class="modal__submit-btn" disabled>
               Save
