@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -129,6 +129,18 @@
               />
               <span id="card-image-input-error" class="modal__error"></span>
             </label>
+            <div class="modal__or-divider">
+              <span class="modal__or-text">or</span>
+            </div>
+            <label for="card-image-file" class="modal__file-label">
+              <input
+                id="card-image-file"
+                type="file"
+                class="modal__file-input"
+                accept="image/*"
+              />
+              <span class="modal__file-btn">Upload from computer</span>
+            </label>
             <label for="card-caption-input" class="modal__label"
               >Caption
               <input
@@ -175,6 +187,18 @@
                 required
               />
               <span id="profile-avatar-input-error" class="modal__error"></span>
+            </label>
+            <div class="modal__or-divider">
+              <span class="modal__or-text">or</span>
+            </div>
+            <label for="avatar-file-input" class="modal__file-label">
+              <input
+                id="avatar-file-input"
+                type="file"
+                class="modal__file-input"
+                accept="image/*"
+              />
+              <span class="modal__file-btn">Upload from computer</span>
             </label>
             <button type="submit" class="modal__submit-btn" disabled>
               Save
