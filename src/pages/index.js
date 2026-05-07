@@ -128,6 +128,12 @@ const deleteModal = document.querySelector("#delete-modal");
 const deleteForm = deleteModal.querySelector(".modal__form");
 const deleteCancelBtn = deleteModal.querySelector(".modal__cancel-btn");
 
+// Edit caption elements
+const editCaptionModal = document.querySelector("#edit-caption-modal");
+const editCaptionForm = editCaptionModal.querySelector(".modal__form");
+const editCaptionInput = editCaptionModal.querySelector("#edit-caption-input");
+let selectedCaptionElement;
+
 // Preview modal elements
 const previewModal = document.querySelector("#preview-modal");
 const previewImgEl = previewModal.querySelector(".modal__image");
@@ -207,6 +213,20 @@ function handleDeleteCard(card, cardId) {
   openModal(deleteModal);
 }
 
+function handleEditCaption(captionElement, cardId) {
+  selectedCaptionElement = captionElement;
+  selectedCardId = cardId;
+  editCaptionInput.value = captionElement.textContent;
+
+  resetValidation(editCaptionForm, [editCaptionInput], validationConfig);
+  const buttonElement = editCaptionForm.querySelector(
+    validationConfig.submitButtonSelector,
+  );
+  toggleButtonState([editCaptionInput], buttonElement, validationConfig);
+
+  openModal(editCaptionModal);
+}
+
 function handleAvatarSubmit(evt) {
   evt.preventDefault();
   const avatarUrl = avatarInput.value;
@@ -240,6 +260,7 @@ function getCardElement(data) {
   const caption = card.querySelector(".card__caption");
   const likeBtn = card.querySelector(".card__like-btn");
   const deleteBtn = card.querySelector(".card__delete-btn");
+  const editBtn = card.querySelector(".card__edit-btn");
 
   // If card is liked, set active class
   const isLiked = data.isLiked;
@@ -255,13 +276,17 @@ function getCardElement(data) {
   if (data._id) {
     likeBtn.addEventListener("click", (evt) => handleLike(evt, data._id));
     deleteBtn.addEventListener("click", () => handleDeleteCard(card, data._id));
+    editBtn.addEventListener("click", () =>
+      handleEditCaption(caption, data._id),
+    );
   } else {
     // For cards without IDs (initial cards), add simple toggle
     likeBtn.addEventListener("click", () => {
       likeBtn.classList.toggle("card__like-btn_active");
     });
-    // Hide delete button for initial cards
+    // Hide delete and edit buttons for initial cards
     deleteBtn.style.display = "none";
+    editBtn.style.display = "none";
   }
 
   image.addEventListener("click", () => handleImagePreview(data));
@@ -319,6 +344,26 @@ editProfileForm.addEventListener("submit", (evt) => {
 });
 
 // TODO - implement loading text for all over form submissions
+
+// Edit caption function
+editCaptionForm.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  const submitBtn = evt.submitter;
+  setButtonText(submitBtn, true, "Save", "Saving...");
+
+  api
+    .editCard(selectedCardId, {
+      name: editCaptionInput.value,
+    })
+    .then((data) => {
+      selectedCaptionElement.textContent = data.name;
+      closeModal(editCaptionModal);
+    })
+    .catch(console.error)
+    .finally(() => {
+      setButtonText(submitBtn, false, "Save", "Saving...");
+    });
+});
 
 // New post function
 newPostBtn.addEventListener("click", () => {

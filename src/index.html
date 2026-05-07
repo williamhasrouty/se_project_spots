@@ -66,7 +66,10 @@
                 <img src="#" alt="" class="card__image" />
                 <div class="card__content">
                   <h2 class="card__caption"></h2>
-                  <button type="button" class="card__like-btn"></button>
+                  <div class="card__actions">
+                    <button type="button" class="card__edit-btn"></button>
+                    <button type="button" class="card__like-btn"></button>
+                  </div>
                 </div>
               </li>
             </template>
@@ -206,6 +209,31 @@
               </button>
               <button type="button" class="modal__cancel-btn">Cancel</button>
             </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="edit-caption-modal">
+        <div class="modal__container">
+          <button type="button" class="modal__close-btn"></button>
+          <h2 class="modal__title">Edit caption</h2>
+          <form class="modal__form" id="edit-caption-form" novalidate>
+            <label for="edit-caption-input" class="modal__label"
+              >Caption
+              <input
+                id="edit-caption-input"
+                type="text"
+                class="modal__input"
+                placeholder="Type your caption"
+                minlength="2"
+                maxlength="30"
+                required
+              />
+              <span id="edit-caption-input-error" class="modal__error"></span>
+            </label>
+            <button type="submit" class="modal__submit-btn" disabled>
+              Save
+            </button>
           </form>
         </div>
       </div>

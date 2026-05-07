@@ -34,6 +34,33 @@
   max-width: 350px;
 }
 
+.card__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card__edit-btn {
+  background-image: url(../images/pencil-icon.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background-color: transparent;
+  opacity: 40%;
+  transition: opacity 0.1s;
+  padding: 0;
+}
+
+.card__edit-btn:hover {
+  opacity: 1;
+  cursor:
+    url("../images/hover-cursor.svg") 6 6,
+    auto;
+}
+
 .card__like-btn {
   background-image: url(../images/heart-icon.svg);
   background-size: contain;
@@ -93,7 +120,7 @@
   .card__caption {
     font-size: 1rem;
     font-weight: 500;
-    max-width: 250px;
+    max-width: 200px;
   }
 
   .card__like-btn {
