@@ -72,14 +72,6 @@ class Api {
       headers: this._headers,
     }).then(this._handleResponse);
   }
-
-  editCard(id, { name }) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({ name }),
-    }).then(this._handleResponse);
-  }
 }
 
 export default Api;
